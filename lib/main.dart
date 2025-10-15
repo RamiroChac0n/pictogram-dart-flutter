@@ -14,6 +14,9 @@
 /// before building the widget tree to avoid theme flickering on startup.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pictogram_dart_flutter/core/bloc/gallery_bloc.dart';
+import 'package:pictogram_dart_flutter/core/repositories/gallery_repository.dart';
 
 import 'app.dart';
 import 'core/theme/theme_provider.dart';
@@ -22,6 +25,7 @@ import 'injection_container.dart' as di;
 void main() async {
   // Ensure that Flutter bindings are initialized before running async operations
   // This is required when calling async code before runApp()
+  final galleryRepo = GalleryRepository();
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize the dependency injection container
@@ -37,5 +41,12 @@ void main() async {
   await themeProvider.loadTheme();
 
   // Run the app (PictogramApp will retrieve ThemeProvider from DI container)
-  runApp(const PictogramApp());
+runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => GalleryBloc(galleryRepo)),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
