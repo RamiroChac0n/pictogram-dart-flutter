@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -18,21 +18,157 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 
-  <!-- iOS meta tags & icons -->
+  <!-- App Description -->
+  <meta name="description" content="Pictogram - Visor y editor de imágenes web. Soporta JPG, PNG, GIF, BMP y WEBP. Edita, redimensiona y convierte formatos de imagen directamente en tu navegador.">
+  <meta name="keywords" content="editor de imágenes, visor de imágenes, convertir imágenes, redimensionar imágenes, rotar imágenes, JPG, PNG, GIF, WEBP, BMP">
+  <meta name="author" content="Pictogram">
+
+  <!-- PWA Configuration -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="pictogram_dart_flutter">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Pictogram">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <!-- Theme Color (matches default theme - Purple) -->
+  <meta name="theme-color" content="#6750A4">
+  <meta name="msapplication-TileColor" content="#6750A4">
 
-  <title>pictogram_dart_flutter</title>
+  <!-- Open Graph Meta Tags (for social sharing) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pictogram - Editor de Imágenes Web">
+  <meta property="og:description" content="Visor y editor de imágenes web profesional. Edita, redimensiona y convierte formatos directamente en tu navegador.">
+  <meta property="og:image" content="icons/Icon-512.png">
+  <meta property="og:url" content="">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pictogram - Editor de Imágenes Web">
+  <meta name="twitter:description" content="Visor y editor de imágenes web profesional.">
+  <meta name="twitter:image" content="icons/Icon-512.png">
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png"/>
+  <link rel="apple-touch-icon" sizes="192x192" href="icons/Icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icons/Icon-512.png">
+
+  <!-- Manifest -->
   <link rel="manifest" href="manifest.json">
+
+  <title>Pictogram - Editor de Imágenes Web</title>
+
+  <!-- Preconnect to improve performance (if using external resources) -->
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+
+  <style>
+    /* Loading screen styles */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #FDFBFF;
+      overflow: hidden;
+    }
+
+    #loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #FDFBFF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #loading-logo {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #6750A4 0%, #9575CD 100%);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(103, 80, 164, 0.3);
+    }
+
+    #loading-logo svg {
+      width: 72px;
+      height: 72px;
+      fill: white;
+    }
+
+    #loading-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: #1C1B1F;
+      margin-bottom: 16px;
+    }
+
+    #loading-spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid #E8DEF8;
+      border-top-color: #6750A4;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body, #loading {
+        background-color: #1C1B1F;
+      }
+      #loading-text {
+        color: #E6E1E5;
+      }
+      #loading-spinner {
+        border-color: #4A4458;
+        border-top-color: #D0BCFF;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- Loading Screen -->
+  <div id="loading">
+    <div id="loading-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M21,17H7V3H21M21,1H7A2,2 0 0,0 5,3V17A2,2 0 0,0 7,19H21A2,2 0 0,0 23,17V3A2,2 0 0,0 21,1M3,5H1V21A2,2 0 0,0 3,23H19V21H3M15.96,10.29L13.21,13.83L11.25,11.47L8.5,15H19.5L15.96,10.29Z"/>
+      </svg>
+    </div>
+    <div id="loading-text">Pictogram</div>
+    <div id="loading-spinner"></div>
+  </div>
+
   <script src="flutter_bootstrap.js" async></script>
+
+  <script>
+    // Hide loading screen when Flutter is ready
+    window.addEventListener('flutter-first-frame', function () {
+      const loading = document.getElementById('loading');
+      if (loading) {
+        loading.style.opacity = '0';
+        loading.style.transition = 'opacity 0.3s ease-out';
+        setTimeout(() => loading.remove(), 300);
+      }
+    });
+
+    // Service Worker registration for PWA offline support
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js');
+      });
+    }
+  </script>
 </body>
 </html>
