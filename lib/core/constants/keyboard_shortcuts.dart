@@ -7,6 +7,7 @@
 /// This file currently contains placeholder structure.
 library;
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 /// Categories for organizing keyboard shortcuts.
