@@ -47,10 +47,9 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'presentation/editor/editor_page.dart';
 
 import 'core/theme/theme_provider.dart';
-import 'core/theme/app_themes.dart';
+import 'core/navigation/app_router.dart';
 import 'injection_container.dart';
 
 /// Root application widget for Pictogram.
@@ -78,10 +77,10 @@ class PictogramApp extends StatelessWidget {
       value: themeProvider,
 
       // Consumer rebuilds only when ThemeProvider notifies listeners
-      // This is efficient because only MaterialApp rebuilds, not the entire Provider tree
+      // This is efficient because only MaterialApp.router rebuilds, not the entire Provider tree
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
-          return MaterialApp(
+          return MaterialApp.router(
             // Application title (shown in task switcher on some platforms)
             title: 'Pictogram',
 
@@ -98,9 +97,9 @@ class PictogramApp extends StatelessWidget {
             // MaterialApp automatically switches between theme and darkTheme based on this
             themeMode: themeProvider.themeMode,
 
-            // Initial route - currently showing temporary MainScreen
-            // This will be replaced with proper routing in Phase 2
-            home: const EditorPage(),
+            // Router configuration using GoRouter
+            // Handles all navigation, deep linking, and routing logic
+            routerConfig: AppRouter.router,
           );
         },
       ),
