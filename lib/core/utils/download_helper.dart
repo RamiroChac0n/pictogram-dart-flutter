@@ -10,10 +10,13 @@ import 'dart:typed_data';
 import '../constants/image_formats.dart';
 import '../errors/exceptions.dart';
 
+export 'download_helper_web.dart'
+    if (dart.library.io) 'download_helper_io.dart';
+
 /// Helper class for downloading files in the web environment.
 class DownloadHelper {
   // Private constructor to prevent instantiation
-  DownloadHelper._();
+  const DownloadHelper();
 
   // ============================================================================
   // Image Download Methods

@@ -47,6 +47,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'presentation/editor/editor_page.dart';
 
 import 'core/theme/theme_provider.dart';
 import 'core/theme/app_themes.dart';
@@ -99,7 +100,7 @@ class PictogramApp extends StatelessWidget {
 
             // Initial route - currently showing temporary MainScreen
             // This will be replaced with proper routing in Phase 2
-            home: const MainScreen(),
+            home: const EditorPage(),
           );
         },
       ),
