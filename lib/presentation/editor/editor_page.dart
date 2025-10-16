@@ -6,6 +6,7 @@ import '../../core/image_processing/services/image_processor.dart';
 import '../../core/image_processing/entities/edit_operation.dart';
 import '../../core/utils/download_helper.dart';
 import '../../core/image_processing/usecases/download_image_usecase.dart';
+import '../settings/settings_page.dart';
 
 class EditorPage extends StatefulWidget {
   const EditorPage({super.key});
@@ -64,6 +65,19 @@ class _EditorPageState extends State<EditorPage> {
             tooltip: 'Descargar',
             icon: const Icon(Icons.download),
             onPressed: _downloadEdited,
+          ),
+          const SizedBox(width: 8),
+          IconButton(
+            tooltip: 'Configuración',
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SettingsPage(),
+                ),
+              );
+            },
           ),
         ],
       ),
