@@ -9,6 +9,7 @@ import '../../core/utils/download_helper.dart';
 import '../../core/image_processing/usecases/download_image_usecase.dart';
 import '../settings/settings_page.dart';
 import 'widgets/resize_dialog.dart';
+import 'widgets/convert_format_dialog.dart';
 
 class EditorPage extends StatefulWidget {
   const EditorPage({super.key});
@@ -69,6 +70,11 @@ class _EditorPageState extends State<EditorPage> {
             tooltip: 'Redimensionar',
             icon: const Icon(Icons.photo_size_select_large),
             onPressed: _showResizeDialog,
+          ),
+          IconButton(
+            tooltip: 'Convertir formato',
+            icon: const Icon(Icons.transform),
+            onPressed: _showConvertFormatDialog,
           ),
           IconButton(
             tooltip: 'Descargar',
@@ -268,6 +274,100 @@ class _EditorPageState extends State<EditorPage> {
           ),
         ),
       );
+    }
+  }
+
+  // ========================== CONVERTIR FORMATO ==========================
+
+  Future<void> _showConvertFormatDialog() async {
+    if (_originalImageBytes == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('⚠️ Primero cargá una imagen'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
+
+    final result = await showDialog<ConvertFormatDialogResult>(
+      context: context,
+      builder: (context) => ConvertFormatDialog(
+        currentFormat: _currentFormat,
+      ),
+    );
+
+    if (result != null) {
+      _applyFormatConversion(
+        targetFormat: result.targetFormat,
+        jpgQuality: result.jpgQuality,
+        overwriteFile: result.overwriteFile,
+      );
+    }
+  }
+
+  void _applyFormatConversion({
+    required OutputFormat targetFormat,
+    required int jpgQuality,
+    required bool overwriteFile,
+  }) {
+    if (_originalImageBytes == null) return;
+
+    // Guardar el formato anterior para mostrar en el mensaje
+    final oldFormat = _currentFormat;
+
+    setState(() {
+      // Agregar la operación de conversión de formato
+      _operations.add(EditOperation(
+        type: TransformationType.convertFormat,
+        params: {
+          'to': targetFormat.name,
+        },
+      ));
+
+      // Actualizar el formato actual
+      _currentFormat = targetFormat;
+
+      // Aplicar pipeline completo desde la imagen original
+      final res = _processor.applyPipeline(
+        originalBytes: _originalImageBytes!,
+        operations: _operations,
+        targetFormat: _currentFormat,
+        jpgQuality: jpgQuality,
+      );
+
+      // Actualizar preview
+      _previewImageBytes = res.bytes;
+
+      // Configurar opciones de descarga
+      _currentJpgQuality = jpgQuality;
+      _shouldAddResizeSuffix = !overwriteFile;
+    });
+
+    // Mostrar confirmación
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '✅ Formato convertido de ${_getFormatDisplayName(oldFormat)} a ${_getFormatDisplayName(targetFormat)}',
+          ),
+        ),
+      );
+    }
+  }
+
+  String _getFormatDisplayName(OutputFormat format) {
+    switch (format) {
+      case OutputFormat.jpg:
+        return 'JPG';
+      case OutputFormat.png:
+        return 'PNG';
+      case OutputFormat.bmp:
+        return 'BMP';
+      case OutputFormat.gif:
+        return 'GIF';
+      case OutputFormat.webp:
+        return 'WEBP';
     }
   }
 }
