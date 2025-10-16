@@ -15,7 +15,12 @@ class EditorPage extends StatefulWidget {
 }
 
 class _EditorPageState extends State<EditorPage> {
-  Uint8List? _imageBytes;
+  // Imagen original sin modificar (nunca cambia después de cargar)
+  Uint8List? _originalImageBytes;
+
+  // Imagen con transformaciones aplicadas (para mostrar en pantalla)
+  Uint8List? _previewImageBytes;
+
   final List<EditOperation> _operations = [];
   final ImageProcessor _processor = ImageProcessor();
   final DownloadHelper _downloader = DownloadHelper();
@@ -63,7 +68,7 @@ class _EditorPageState extends State<EditorPage> {
         ],
       ),
       body: Center(
-        child: _imageBytes == null
+        child: _previewImageBytes == null
             ? const Text(
                 'Cargá una imagen para empezar a editar',
                 style: TextStyle(fontSize: 18),
@@ -74,7 +79,7 @@ class _EditorPageState extends State<EditorPage> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Image.memory(_imageBytes!),
+                      child: Image.memory(_previewImageBytes!),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -97,7 +102,10 @@ class _EditorPageState extends State<EditorPage> {
     );
     if (result != null && result.files.single.bytes != null) {
       setState(() {
-        _imageBytes = result.files.single.bytes!;
+        // Guardar la imagen original (nunca se modifica)
+        _originalImageBytes = result.files.single.bytes!;
+        // Inicialmente, el preview es igual al original
+        _previewImageBytes = result.files.single.bytes!;
         _fileName = result.files.single.name.split('.').first;
         _operations.clear();
       });
@@ -105,28 +113,33 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   void _apply(TransformationType type) {
-    if (_imageBytes == null) return;
+    if (_originalImageBytes == null) return;
 
     setState(() {
+      // Agregar la nueva operación a la lista
       _operations.add(EditOperation(type: type, params: {}));
 
-      // vista previa inmediata
+      // ✅ CORRECCIÓN: Siempre aplicar TODAS las operaciones sobre la imagen ORIGINAL
+      // Esto evita que las transformaciones se acumulen exponencialmente
       final res = _processor.applyPipeline(
-        originalBytes: _imageBytes!,
-        operations: _operations,
+        originalBytes: _originalImageBytes!,  // ✅ Usar siempre el original
+        operations: _operations,               // ✅ Aplicar todas las operaciones
         targetFormat: _currentFormat,
       );
-      _imageBytes = res.bytes;
+
+      // Actualizar solo el preview con el resultado
+      _previewImageBytes = res.bytes;
     });
   }
 
   Future<void> _downloadEdited() async {
-    if (_imageBytes == null) return;
+    if (_originalImageBytes == null) return;
 
     final useCase = DownloadImageUseCase(_processor, _downloader);
 
+    // ✅ CORRECCIÓN: Usar la imagen original con todas las operaciones
     await useCase.call(
-      originalBytes: _imageBytes!,
+      originalBytes: _originalImageBytes!,  // ✅ Usar el original
       operations: _operations,
       format: _currentFormat,
       filenameBase: _fileName,
