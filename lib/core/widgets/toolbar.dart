@@ -13,8 +13,8 @@ class PictogramToolbar extends StatelessWidget {
     this.onCopy,
     this.onPrint,
     this.onToggleMenu,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   Widget _button(BuildContext ctx, IconData icon, String label, String shortcut, VoidCallback? onTap) {
     return Tooltip(

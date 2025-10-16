@@ -17,6 +17,7 @@
 ///   darkTheme: AppThemes.getDarkTheme(AppThemeType.defaultTheme),
 /// )
 /// ```
+library;
 
 import 'package:flutter/material.dart';
 
@@ -182,26 +183,26 @@ class AppThemes {
           ),
         ).copyWith(
           // Hover state for web interactions
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.hovered)) {
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.hovered)) {
               return colorScheme.primary.withOpacity(0.9);
             }
-            if (states.contains(MaterialState.pressed)) {
+            if (states.contains(WidgetState.pressed)) {
               return colorScheme.primary.withOpacity(0.85);
             }
-            if (states.contains(MaterialState.disabled)) {
+            if (states.contains(WidgetState.disabled)) {
               return colorScheme.onSurface.withOpacity(0.12);
             }
             return colorScheme.primary;
           }),
-          elevation: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.hovered)) {
+          elevation: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.hovered)) {
               return 4;
             }
-            if (states.contains(MaterialState.pressed)) {
+            if (states.contains(WidgetState.pressed)) {
               return 1;
             }
-            if (states.contains(MaterialState.disabled)) {
+            if (states.contains(WidgetState.disabled)) {
               return 0;
             }
             return 2;
@@ -300,7 +301,7 @@ class AppThemes {
       // Input decoration theme - For text fields
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: colorScheme.surfaceVariant.withOpacity(0.3),
+        fillColor: colorScheme.surfaceContainerHighest.withOpacity(0.3),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: colorScheme.outline),
@@ -345,7 +346,7 @@ class AppThemes {
 
       // Chip theme
       chipTheme: ChipThemeData(
-        backgroundColor: colorScheme.surfaceVariant,
+        backgroundColor: colorScheme.surfaceContainerHighest,
         deleteIconColor: colorScheme.onSurfaceVariant,
         disabledColor: colorScheme.onSurface.withOpacity(0.12),
         selectedColor: colorScheme.secondaryContainer,
@@ -404,8 +405,8 @@ class AppThemes {
       // Progress indicator theme
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: colorScheme.primary,
-        linearTrackColor: colorScheme.surfaceVariant,
-        circularTrackColor: colorScheme.surfaceVariant,
+        linearTrackColor: colorScheme.surfaceContainerHighest,
+        circularTrackColor: colorScheme.surfaceContainerHighest,
       ),
 
       // Navigation rail theme (for desktop layouts)
@@ -438,8 +439,8 @@ class AppThemes {
         indicatorColor: colorScheme.secondaryContainer,
         elevation: 3,
         height: 80,
-        iconTheme: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return IconThemeData(
               color: colorScheme.onSecondaryContainer,
               size: 24,
@@ -450,8 +451,8 @@ class AppThemes {
             size: 24,
           );
         }),
-        labelTextStyle: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return TextStyle(
               color: colorScheme.onSurface,
               fontSize: 12,
@@ -467,29 +468,29 @@ class AppThemes {
 
       // Switch theme
       switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return colorScheme.onPrimary;
           }
           return colorScheme.outline;
         }),
-        trackColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return colorScheme.primary;
           }
-          return colorScheme.surfaceVariant;
+          return colorScheme.surfaceContainerHighest;
         }),
       ),
 
       // Checkbox theme
       checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return colorScheme.primary;
           }
           return Colors.transparent;
         }),
-        checkColor: MaterialStateProperty.all(colorScheme.onPrimary),
+        checkColor: WidgetStateProperty.all(colorScheme.onPrimary),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
         ),
@@ -497,8 +498,8 @@ class AppThemes {
 
       // Radio theme
       radioTheme: RadioThemeData(
-        fillColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
             return colorScheme.primary;
           }
           return colorScheme.onSurfaceVariant;
@@ -508,7 +509,7 @@ class AppThemes {
       // Slider theme
       sliderTheme: SliderThemeData(
         activeTrackColor: colorScheme.primary,
-        inactiveTrackColor: colorScheme.surfaceVariant,
+        inactiveTrackColor: colorScheme.surfaceContainerHighest,
         thumbColor: colorScheme.primary,
         overlayColor: colorScheme.primary.withOpacity(0.12),
         valueIndicatorColor: colorScheme.primary,

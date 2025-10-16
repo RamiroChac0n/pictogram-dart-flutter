@@ -7,6 +7,7 @@
 /// ```dart
 /// import 'package:pictogram_dart_flutter/core/theme/theme.dart';
 /// ```
+library;
 
 export 'app_themes.dart';
 export 'theme_provider.dart';

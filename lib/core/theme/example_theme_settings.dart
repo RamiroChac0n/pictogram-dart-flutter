@@ -6,6 +6,7 @@
 ///
 /// This is an example file and can be customized to fit your app's
 /// design and requirements.
+library;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

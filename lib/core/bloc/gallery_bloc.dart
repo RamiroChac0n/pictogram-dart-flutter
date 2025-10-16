@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../entities/thumbnail_entity.dart';
 import '../repositories/gallery_repository.dart';

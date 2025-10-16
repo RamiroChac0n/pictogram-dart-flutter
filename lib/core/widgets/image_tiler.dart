@@ -14,8 +14,8 @@ class ImageTile extends StatelessWidget {
     required this.imageBytes,
     required this.filename,
     this.onSelect,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

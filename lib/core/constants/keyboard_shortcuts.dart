@@ -1,4 +1,12 @@
-// lib/core/constants/keyboard_shortcuts.dart
+/// Keyboard shortcuts for the Pictogram application.
+///
+/// This file defines all keyboard shortcuts and their configurations,
+/// including key combinations, descriptions, and categories.
+///
+/// NOTE: Full keyboard shortcuts implementation will be completed in Phase 5.
+/// This file currently contains placeholder structure.
+library;
+
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 

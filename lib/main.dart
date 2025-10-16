@@ -12,6 +12,7 @@
 ///
 /// The async main function is necessary because we need to load user preferences
 /// before building the widget tree to avoid theme flickering on startup.
+library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

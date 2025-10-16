@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '/../core/bloc/gallery_bloc.dart';
-import '/../core/entities/thumbnail_entity.dart';
 import 'widgets/thumbnail_grid.dart';
 import 'widgets/gallery_header.dart';
 
