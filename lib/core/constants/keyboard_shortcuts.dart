@@ -1,10 +1,4 @@
 /// Keyboard shortcuts for the Pictogram application.
-///
-/// This file defines all keyboard shortcuts and their configurations,
-/// including key combinations, descriptions, and categories.
-///
-/// NOTE: Full keyboard shortcuts implementation will be completed in Phase 5.
-/// This file currently contains placeholder structure.
 library;
 
 import 'package:flutter/material.dart';
@@ -29,85 +23,57 @@ enum ShortcutCategory {
 }
 
 /// Keyboard shortcuts configuration for the Pictogram application.
-///
-/// Contains all keyboard shortcut definitions organized by category.
-///
-/// Usage:
-/// ```dart
-/// // Navigation shortcuts
-/// LogicalKeySet arrowLeft = KeyboardShortcuts.previousImageKeys;
-/// LogicalKeySet arrowRight = KeyboardShortcuts.nextImageKeys;
-///
-/// // Editing shortcuts
-/// LogicalKeySet ctrlArrowRight = KeyboardShortcuts.rotateClockwiseKeys;
-/// ```
 class KeyboardShortcuts {
-  // Private constructor to prevent instantiation
   KeyboardShortcuts._();
 
   // ============================================================================
   // Navigation Shortcuts
   // ============================================================================
-
-  /// Keys for navigating to the previous image (←)
   static final LogicalKeySet previousImageKeys =
       LogicalKeySet(LogicalKeyboardKey.arrowLeft);
   static const String previousImageDescription = 'Previous image (←)';
 
-  /// Keys for navigating to the next image (→)
   static final LogicalKeySet nextImageKeys =
       LogicalKeySet(LogicalKeyboardKey.arrowRight);
   static const String nextImageDescription = 'Next image (→)';
-
-  /// Keys for navigating to the first image (Home)
+  
   static final LogicalKeySet firstImageKeys =
       LogicalKeySet(LogicalKeyboardKey.home);
   static const String firstImageDescription = 'First image (Home)';
 
-  /// Keys for navigating to the last image (End)
   static final LogicalKeySet lastImageKeys =
       LogicalKeySet(LogicalKeyboardKey.end);
   static const String lastImageDescription = 'Last image (End)';
 
   // ============================================================================
-  // Editing Shortcuts
+  // Editing Shortcuts (USANDO LETRAS SIMPLES PARA MÁXIMA COMPATIBILIDAD)
   // ============================================================================
 
-  /// Keys for rotating image clockwise (Ctrl+→)
-  static final LogicalKeySet rotateClockwiseKeys = LogicalKeySet(
-    LogicalKeyboardKey.control,
-    LogicalKeyboardKey.arrowRight,
-  );
-  static const String rotateClockwiseDescription = 'Rotate clockwise (Ctrl+→)';
+  /// Keys for rotating image clockwise (R)
+  static final LogicalKeySet rotateClockwiseKeys = 
+      LogicalKeySet(LogicalKeyboardKey.keyR);
+  static const String rotateClockwiseDescription = 'Rotate clockwise (R)';
 
-  /// Keys for rotating image counter-clockwise (Ctrl+←)
-  static final LogicalKeySet rotateCounterClockwiseKeys = LogicalKeySet(
-    LogicalKeyboardKey.control,
-    LogicalKeyboardKey.arrowLeft,
-  );
+  /// Keys for rotating image counter-clockwise (L)
+  static final LogicalKeySet rotateCounterClockwiseKeys = 
+      LogicalKeySet(LogicalKeyboardKey.keyL);
   static const String rotateCounterClockwiseDescription =
-      'Rotate counter-clockwise (Ctrl+←)';
+      'Rotate counter-clockwise (L)';
 
-  /// Keys for flipping image horizontally (Ctrl+Shift+→)
-  static final LogicalKeySet flipHorizontalKeys = LogicalKeySet(
-    LogicalKeyboardKey.control,
-    LogicalKeyboardKey.shift,
-    LogicalKeyboardKey.arrowRight,
-  );
+  /// Keys for flipping image horizontally (H)
+  static final LogicalKeySet flipHorizontalKeys = 
+      LogicalKeySet(LogicalKeyboardKey.keyH);
   static const String flipHorizontalDescription =
-      'Flip horizontally (Ctrl+Shift+→)';
+      'Flip horizontally (H)';
 
-  /// Keys for flipping image vertically (Ctrl+Shift+↑)
-  static final LogicalKeySet flipVerticalKeys = LogicalKeySet(
-    LogicalKeyboardKey.control,
-    LogicalKeyboardKey.shift,
-    LogicalKeyboardKey.arrowUp,
-  );
+  /// Keys for flipping image vertically (V)
+  static final LogicalKeySet flipVerticalKeys = 
+      LogicalKeySet(LogicalKeyboardKey.keyV);
   static const String flipVerticalDescription =
-      'Flip vertically (Ctrl+Shift+↑)';
+      'Flip vertically (V)';
 
   // ============================================================================
-  // Action Shortcuts
+  // Action Shortcuts 
   // ============================================================================
 
   /// Keys for opening files (Ctrl+O)
@@ -147,22 +113,18 @@ class KeyboardShortcuts {
   // Zoom Shortcuts
   // ============================================================================
 
-  /// Keys for zooming in (+)
   static final LogicalKeySet zoomInKeys =
-      LogicalKeySet(LogicalKeyboardKey.equal);
+      LogicalKeySet(LogicalKeyboardKey.equal); 
   static const String zoomInDescription = 'Zoom in (+)';
 
-  /// Keys for zooming out (-)
   static final LogicalKeySet zoomOutKeys =
       LogicalKeySet(LogicalKeyboardKey.minus);
   static const String zoomOutDescription = 'Zoom out (-)';
 
-  /// Keys for resetting zoom (0)
   static final LogicalKeySet zoomResetKeys =
       LogicalKeySet(LogicalKeyboardKey.digit0);
   static const String zoomResetDescription = 'Reset zoom (0)';
 
-  /// Keys for fitting to screen (Ctrl+0)
   static final LogicalKeySet fitToScreenKeys = LogicalKeySet(
     LogicalKeyboardKey.control,
     LogicalKeyboardKey.digit0,
@@ -202,7 +164,6 @@ class KeyboardShortcuts {
   // Helper Methods
   // ============================================================================
 
-  /// Gets the display name for a shortcut category.
   static String getCategoryName(ShortcutCategory category) {
     switch (category) {
       case ShortcutCategory.navigation:
@@ -218,7 +179,6 @@ class KeyboardShortcuts {
     }
   }
 
-  /// Gets a human-readable representation of a key combination.
   static String getDisplayString(LogicalKeySet keySet) {
     final keys = keySet.keys.toList();
     final parts = <String>[];
@@ -265,8 +225,6 @@ class KeyboardShortcuts {
   }
 }
 
-/// Extension to get category description.
 extension ShortcutCategoryExtension on ShortcutCategory {
-  /// Gets the display name for this category.
   String get displayName => KeyboardShortcuts.getCategoryName(this);
 }
